@@ -1,6 +1,7 @@
 <template>
   <div id="app">
    <!-- <el-button type="danger" icon="el-icon-delete" circle></el-button> -->
+   <router-view></router-view>
   </div>
 </template>
 
