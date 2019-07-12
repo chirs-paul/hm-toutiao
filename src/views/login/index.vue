@@ -55,6 +55,7 @@ export default {
           this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
             .then((res) => {
               //  console.log(res.data)
+              window.sessionStorage.setItem('hm-toutiao', JSON.stringify(res.data.data))
               this.$router.push('/')
             })
             .catch(() => {
