@@ -22,11 +22,11 @@
           <i class="el-icon-document"></i>
           <span slot="title">内容管理</span>
         </el-menu-item>
-         <el-menu-item index="/picture">
+         <el-menu-item index="/image">
           <i class="el-icon-picture"></i>
           <span slot="title">素材管理</span>
         </el-menu-item>
-         <el-menu-item index="/public">
+         <el-menu-item index="/publish">
           <i class="el-icon-s-promotion"></i>
           <span slot="title">发布文章</span>
         </el-menu-item>
@@ -51,17 +51,17 @@
         <el-dropdown style="float:right">
           <span class="el-dropdown-link">
             <img
-              src="../../assets/images/paul.jpg"
+              :src="avatar"
               style="vertical-align: middle"
               width="30"
               height="30"
             />
-            <b style="vertical-align: middle;padding-left:15px">黑马小哥</b>
+            <b style="vertical-align: middle;padding-left:15px">{{name}}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click.native="setting()">个人中心</el-dropdown-item>
+            <el-dropdown-item @click.native="logoout()">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -76,12 +76,26 @@
 export default {
   data () {
     return {
-      collapse: false
+      collapse: false,
+      avatar: '',
+      name: ''
     }
+  },
+  created () {
+    const user = JSON.parse(window.sessionStorage.getItem('hm-toutiao'))
+    this.avatar = user.photo
+    this.name = user.name
   },
   methods: {
     toggleMenu () {
       this.collapse = !this.collapse
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    logoout () {
+      window.sessionStorage.removeItem('hm-toutiao')
+      this.$router.push('/login')
     }
   }
 }

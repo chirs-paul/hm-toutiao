@@ -1,15 +1,19 @@
 <template>
-    <div class="container">
-        <img src="../../assets/images/welcome.jpg" alt="">
-    </div>
+  <div class="container">
+    <img src="../../assets/images/welcome.jpg" alt />
+  </div>
 </template>
 
 <script>
 export default {
-
+  created () {
+    this.$http.get('articles').then(res => console.log(res.data))
+  }
 }
 </script>
 
-<style>
-
+<style scoped lang='less'>
+.container {
+  text-align: center;
+}
 </style>
