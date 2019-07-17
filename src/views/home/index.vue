@@ -48,24 +48,28 @@
       <el-header class="my-header">
         <span class="el-icon-s-fold" @click="toggleMenu()"></span>
         <span class="text">江苏传智播客科技教育有限公司</span>
-        <el-dropdown style="float:right">
+        <el-dropdown style="float:right" @command="handleCommand">
           <span class="el-dropdown-link">
             <img
               :src="avatar"
               style="vertical-align: middle"
               width="30"
               height="30"
+              alt
             />
             <b style="vertical-align: middle;padding-left:15px">{{name}}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="setting()">个人中心</el-dropdown-item>
-            <el-dropdown-item @click.native="logoout()">退出登录</el-dropdown-item>
+            <!-- <el-dropdown-item icon="el-icon-setting"  @click.native="setting()">个人中心</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" @click.native="logoout()">退出登录</el-dropdown-item> -->
+            <el-dropdown-item icon="el-icon-setting" command="setting">个人中心</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" command="logoout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
       <el-main>
+        <!-- 二级路由显示的位置 -->
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -90,12 +94,20 @@ export default {
     toggleMenu () {
       this.collapse = !this.collapse
     },
+    // 1. 使用的是 click 事件，dom的原生事件。
+    // 2. 此时你绑定了一个原生事件给 组件el-dropdown-item
+    // 3. 组件解析过后 这个标签是不存在 事件绑定无效
+    // 4. 事件修饰符：@click.prevent 阻止浏览器默认行为  @click.native 绑定原生的事件
     setting () {
       this.$router.push('/setting')
     },
     logoout () {
+      // 清除sessionStorage的hm-toutiao
       window.sessionStorage.removeItem('hm-toutiao')
       this.$router.push('/login')
+    },
+    handleCommand (command) {
+      this[command]()
     }
   }
 }
