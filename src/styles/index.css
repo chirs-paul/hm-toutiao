@@ -25,3 +25,12 @@
   height: 178px;
   display: block;
 }
+.article-container .ql-editor {
+  height: 300px;
+}
+.article-container .ql-toobar .ql-snow {
+  padding: 0 8px;
+}
+.image-container .el-dialog_footer {
+  text-align: center;
+}
